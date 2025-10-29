@@ -1,5 +1,7 @@
 package com.example.Shipment_Tracking.entity.enums;
 
-public class Role {
-    
+public enum  Role {
+    ADMIN,
+    CUSTOMER,
+    AGENT
 }
