@@ -14,7 +14,8 @@ public class Route {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private String startPoint;
-    private String endPoint;
+    private String origin;
+    private String destination;
     private double distance;
+    private double estimatedTime;
 }

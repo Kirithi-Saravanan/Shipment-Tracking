@@ -10,6 +10,7 @@ import java.util.List;
 public class RouteService {
     @Autowired private RouteRepository routeRepository;
     public List<Route> getAllRoutes(){return routeRepository.findAll();}
+    public Route getRouteById(Long id){return routeRepository.findById(id).orElseThrow();}
     public void saveRoute(Route route){ routeRepository.save(route);}
     public void deleteRoute(Long id){routeRepository.deleteById(id);}
 }

@@ -17,13 +17,13 @@ public class RouteController {
     @GetMapping
     public String listRoutes(Model model){
         model.addAttribute("routes",routeService.getAllRoutes());
-        return "routes";
+        return "Route/route";
     }
 
-    @GetMapping("/add")
+    @GetMapping({"/add", "/new"})
     public String addRouteForm(Model model){
         model.addAttribute("route",new Route());
-        return "route-form";
+        return "Route/route-form";
     }
 
     @PostMapping("/save")
@@ -36,5 +36,12 @@ public class RouteController {
     public String deleteRoute(@PathVariable Long id){
             routeService.deleteRoute(id);
             return "redirect:/routes";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editRouteForm(@PathVariable Long id, Model model){
+        Route route = routeService.getRouteById(id);
+        model.addAttribute("route", route);
+        return "Route/route-form";
     }
 }

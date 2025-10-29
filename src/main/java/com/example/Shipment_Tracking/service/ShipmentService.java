@@ -15,7 +15,9 @@ public class ShipmentService {
     public List<Shipment> getAllShipments() { return shipmentRepository.findAll(); }
 
     public void saveShipment(Shipment shipment) {
-        shipment.setStatus(ShipmentStatus.CREATED);
+        if (shipment.getId() == null) {
+            shipment.setStatus(ShipmentStatus.CREATED);
+        }
         shipmentRepository.save(shipment);
     }
 
@@ -30,5 +32,13 @@ public class ShipmentService {
         User agent = userRepository.findById(agentId).orElseThrow();
         s.setAssignedAgent(agent);
         shipmentRepository.save(s);
+    }
+
+    public void deleteShipment(Long id) {
+        shipmentRepository.deleteById(id);
+    }
+
+    public Shipment getShipmentById(Long id) {
+        return shipmentRepository.findById(id).orElseThrow();
     }
 }

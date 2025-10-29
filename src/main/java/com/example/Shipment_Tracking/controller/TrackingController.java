@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/tracking")
 public class TrackingController {
-    
+
     @Autowired private TrackingService trackingService;
     @Autowired private ShipmentService shipmentService;
+
+    @GetMapping
+    public String listTracking(Model model){
+        model.addAttribute("shipments", shipmentService.getAllShipments());
+        return "tracking";
+    }
 
     @GetMapping("/{shipmentId}")
     public String viewTracking(@PathVariable Long shipmentId,Model model){
