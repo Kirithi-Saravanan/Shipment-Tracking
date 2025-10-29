@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shipment Tracking - Shipment System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f4f1;
+            color: #4b3832;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #f9d5a7, #f6cac9);
+        }
+
+        .navbar-brand {
+            color: #4b3832 !important;
+            font-weight: 600;
+        }
+
+        .card {
+            background-color: #fff8f3;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(180, 150, 130, 0.2);
+            padding: 30px;
+        }
+
+        .tracking-step {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 25px;
+        }
+
+        .tracking-step::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background-color: #f58c6b;
+            border-radius: 50%;
+        }
+
+        .tracking-step::after {
+            content: '';
+            position: absolute;
+            left: 17px;
+            top: 20px;
+            width: 2px;
+            height: 100%;
+            background-color: #e7c1a1;
+        }
+
+        .tracking-step:last-child::after {
+            display: none;
+        }
+
+        .btn-custom {
+            background-color: #f9a88c;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #f58c6b;
+        }
+
+        .tracking-status {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #4b3832;
+        }
+
+        .tracking-time {
+            color: #7a6650;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light px-4">
+    <a class="navbar-brand" href="/">Shipment System</a>
+</nav>
+
+<div class="container my-5">
+    <div class="card mx-auto" style="max-width: 700px;">
+        <h3 class="text-center mb-4">Track Your Shipment</h3>
+
+        <div class="mb-4">
+            <h5 class="text-center">Select a Shipment to Track</h5>
+            <div class="list-group">
+                <a th:each="shipment : ${shipments}" th:href="@{'/tracking/' + ${shipment.id}}" class="list-group-item list-group-item-action">
+                    <strong>Shipment ID:</strong> <span th:text="${shipment.id}">12345</span> |
+                    <strong>Status:</strong> <span th:text="${shipment.status}">In Transit</span> |
+                    <strong>Customer:</strong> <span th:text="${shipment.customer != null ? shipment.customer.name : 'N/A'}">John Doe</span>
+                </a>
+            </div>
+        </div>
+
+        <div th:if="${logs != null and !logs.empty}">
+            <h5 class="text-center mb-3">Tracking History</h5>
+            <div class="tracking-step" th:each="log : ${logs}">
+                <div class="tracking-status" th:text="${log.status}">In Transit</div>
+                <div class="tracking-time" th:text="${#temporals.format(log.timestamp, 'yyyy-MM-dd HH:mm')}">2025-10-29 14:25</div>
+            </div>
+        </div>
+
+        <div th:if="${logs == null or logs.empty}">
+            <p class="text-center text-muted mt-3">Select a shipment to view tracking history.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
